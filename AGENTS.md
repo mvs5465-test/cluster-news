@@ -1,19 +1,19 @@
 # Cluster News
 
 ## Scope
-- Lightweight Flask news reader for the local cluster.
+- Lightweight Next.js news reader for the local cluster.
 - Keep the app small, server-rendered, and easy to run locally.
 
 ## Local Development
-- Use the existing virtualenv at `.venv` when available.
+- Install with `npm install`.
 - For normal local runs:
-  - `.venv/bin/python app.py`
-- For rapid UI iteration:
-  - `.venv/bin/python -m flask --app app:create_app --debug run --host 0.0.0.0 --port 8080`
+  - `npm run dev`
+- For production verification:
+  - `npm run build && npm run start`
 
 ## App Rules
-- Prefer direct Flask templates and plain CSS over frontend tooling.
-- Keep ingestion simple: RSS/Atom feeds first, scraping only if explicitly requested.
+- Prefer Next.js App Router with server components and plain CSS over client-heavy patterns.
+- Keep ingestion simple: RSS/Atom feeds first, light metadata extraction only.
 - Preserve SQLite as the default persistence layer unless a larger data model is needed.
 
 ## Helm And Releases
@@ -21,6 +21,5 @@
 - Bump `appVersion` when the deployed app behavior meaningfully changes.
 
 ## Verification
-- Run `python -m unittest discover -s tests` for app changes.
+- Run `npm run lint`, `npm test`, and `npm run build` for app changes.
 - Run `helm template cluster-news ./chart` for chart changes.
-
