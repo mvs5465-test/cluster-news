@@ -1,0 +1,8 @@
+helm:
+  parameters:
+  - name: image.repository
+    value: ghcr.io/mvs5465-test/cluster-news
+    forcestring: true
+  - name: image.tag
+    value: main@sha256:7acb9e9e2aa3d7143744f79d7780bab7562de307af31e4223c1dec8f994ab67e
+    forcestring: true
