@@ -3,4 +3,6 @@ __pycache__/
 *.pyc
 data/
 .pytest_cache/
-
+node_modules/
+.next/
+tsconfig.tsbuildinfo
