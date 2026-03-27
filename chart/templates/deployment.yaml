@@ -38,6 +38,10 @@ spec:
               value: {{ .Values.persistence.mountPath | quote }}
             - name: NEWS_REFRESH_MINUTES
               value: {{ .Values.env.NEWS_REFRESH_MINUTES | quote }}
+            - name: NEWS_ACTION_REFRESH_MAX_CONCURRENCY
+              value: {{ .Values.env.NEWS_ACTION_REFRESH_MAX_CONCURRENCY | quote }}
+            - name: NEWS_ACTION_SAVE_MAX_CONCURRENCY
+              value: {{ .Values.env.NEWS_ACTION_SAVE_MAX_CONCURRENCY | quote }}
             - name: NEWS_FEEDS_PATH
               value: {{ printf "%s/%s" .Values.feeds.mountPath .Values.feeds.fileName | quote }}
             - name: OLLAMA_BASE_URL
@@ -84,4 +88,3 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-

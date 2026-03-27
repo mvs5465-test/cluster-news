@@ -30,6 +30,8 @@ resources:
 env:
   NEWS_SITE_NAME: "Cluster News"
   NEWS_REFRESH_MINUTES: "30"
+  NEWS_ACTION_REFRESH_MAX_CONCURRENCY: "1"
+  NEWS_ACTION_SAVE_MAX_CONCURRENCY: "8"
   OLLAMA_BASE_URL: ""
   OLLAMA_MODEL: "llama3.2:3b"
 
@@ -60,4 +62,3 @@ persistence:
 nodeSelector: {}
 tolerations: []
 affinity: {}
-

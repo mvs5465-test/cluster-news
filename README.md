@@ -47,8 +47,11 @@ Optional AI briefing support:
 
 - `OLLAMA_BASE_URL=http://ollama-external.ai.svc.cluster.local:11434`
 - `OLLAMA_MODEL=llama3.2:3b`
+- `NEWS_ACTION_REFRESH_MAX_CONCURRENCY=1`
+- `NEWS_ACTION_SAVE_MAX_CONCURRENCY=8`
 
 The app automatically attempts to extract a representative image from feed metadata or embedded item HTML so the homepage can render a more magazine-like layout.
+Mutation endpoints now fail fast with `429` when refresh or save actions are already at their configured in-process concurrency ceiling.
 
 ## Kubernetes
 
