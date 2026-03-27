@@ -1,0 +1,63 @@
+replicaCount: 1
+
+image:
+  repository: ghcr.io/mvs5465-test/cluster-news
+  tag: "main"
+  pullPolicy: Always
+
+nameOverride: ""
+fullnameOverride: ""
+
+service:
+  type: ClusterIP
+  port: 8080
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+  hosts: []
+  tls: []
+
+resources:
+  requests:
+    memory: "128Mi"
+    cpu: "50m"
+  limits:
+    memory: "256Mi"
+    cpu: "250m"
+
+env:
+  NEWS_SITE_NAME: "Cluster News"
+  NEWS_REFRESH_MINUTES: "30"
+  OLLAMA_BASE_URL: ""
+  OLLAMA_MODEL: "llama3.2:3b"
+
+feeds:
+  fileName: feeds.json
+  mountPath: /config
+  inlineJson: |
+    []
+
+otel:
+  endpoint: ""
+  insecure: true
+  serviceName: "cluster-news"
+
+metrics:
+  enabled: true
+  path: /metrics
+  job: "services/cluster-news"
+
+persistence:
+  enabled: true
+  size: 1Gi
+  accessMode: ReadWriteOnce
+  storageClassName: ""
+  existingClaim: ""
+  mountPath: /data
+
+nodeSelector: {}
+tolerations: []
+affinity: {}
+

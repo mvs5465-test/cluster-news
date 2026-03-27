@@ -1,0 +1,12 @@
+{{- if .Values.feeds.inlineJson }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "cluster-news.fullname" . }}-feeds
+  labels:
+    {{- include "cluster-news.labels" . | nindent 4 }}
+data:
+  {{ .Values.feeds.fileName }}: |
+{{ .Values.feeds.inlineJson | nindent 4 }}
+{{- end }}
+

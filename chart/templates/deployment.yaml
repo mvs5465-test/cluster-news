@@ -1,0 +1,87 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "cluster-news.fullname" . }}
+  labels:
+    {{- include "cluster-news.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "cluster-news.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- if .Values.metrics.enabled }}
+      annotations:
+        k8s.grafana.com/scrape: "true"
+        k8s.grafana.com/job: {{ .Values.metrics.job | quote }}
+        k8s.grafana.com/metrics.path: {{ .Values.metrics.path | quote }}
+        k8s.grafana.com/metrics.portName: "http"
+      {{- end }}
+      labels:
+        {{- include "cluster-news.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: news
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.port }}
+              protocol: TCP
+          env:
+            - name: PORT
+              value: {{ .Values.service.port | quote }}
+            - name: NEWS_SITE_NAME
+              value: {{ .Values.env.NEWS_SITE_NAME | quote }}
+            - name: NEWS_DATA_DIR
+              value: {{ .Values.persistence.mountPath | quote }}
+            - name: NEWS_REFRESH_MINUTES
+              value: {{ .Values.env.NEWS_REFRESH_MINUTES | quote }}
+            - name: NEWS_FEEDS_PATH
+              value: {{ printf "%s/%s" .Values.feeds.mountPath .Values.feeds.fileName | quote }}
+            - name: OLLAMA_BASE_URL
+              value: {{ .Values.env.OLLAMA_BASE_URL | quote }}
+            - name: OLLAMA_MODEL
+              value: {{ .Values.env.OLLAMA_MODEL | quote }}
+            {{- if .Values.otel.endpoint }}
+            - name: OTEL_SERVICE_NAME
+              value: {{ .Values.otel.serviceName | quote }}
+            - name: OTEL_EXPORTER_OTLP_ENDPOINT
+              value: {{ .Values.otel.endpoint | quote }}
+            - name: OTEL_EXPORTER_OTLP_INSECURE
+              value: {{ .Values.otel.insecure | quote }}
+            {{- end }}
+          volumeMounts:
+            - name: news-data
+              mountPath: {{ .Values.persistence.mountPath }}
+            - name: news-feeds
+              mountPath: {{ printf "%s/%s" .Values.feeds.mountPath .Values.feeds.fileName | quote }}
+              subPath: {{ .Values.feeds.fileName }}
+              readOnly: true
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      volumes:
+        - name: news-data
+          {{- if .Values.persistence.enabled }}
+          persistentVolumeClaim:
+            claimName: {{ default (printf "%s-data" (include "cluster-news.fullname" .)) .Values.persistence.existingClaim }}
+          {{- else }}
+          emptyDir: {}
+          {{- end }}
+        - name: news-feeds
+          configMap:
+            name: {{ include "cluster-news.fullname" . }}-feeds
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+

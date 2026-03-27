@@ -1,0 +1,274 @@
+:root {
+  --bg: #f3efe7;
+  --panel: rgba(255, 255, 255, 0.78);
+  --panel-strong: #fffdf8;
+  --text: #1f2937;
+  --muted: #5b6470;
+  --line: rgba(31, 41, 55, 0.12);
+  --accent: #d97706;
+  --accent-dark: #9a3412;
+  --pill: #fff1db;
+  --shadow: 0 20px 50px rgba(31, 41, 55, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  color: var(--text);
+  font-family: Georgia, "Times New Roman", serif;
+  background:
+    radial-gradient(circle at top right, rgba(249, 115, 22, 0.16), transparent 30%),
+    radial-gradient(circle at left center, rgba(59, 130, 246, 0.08), transparent 30%),
+    var(--bg);
+}
+
+a {
+  color: inherit;
+}
+
+.page-shell {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 28px 18px 56px;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  align-items: flex-start;
+  margin-bottom: 28px;
+}
+
+.brand {
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  font-weight: 700;
+  text-decoration: none;
+  letter-spacing: -0.03em;
+}
+
+.tagline,
+.lede {
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.nav {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.nav a,
+button,
+.secondary-button,
+.ghost-button {
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--panel-strong);
+  color: var(--text);
+  text-decoration: none;
+  padding: 10px 16px;
+  font: inherit;
+  cursor: pointer;
+}
+
+button {
+  background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+  border-color: transparent;
+  color: white;
+}
+
+.secondary-button,
+.ghost-button {
+  background: transparent;
+}
+
+.hero,
+.filters,
+.briefing-card,
+.empty-state,
+.story-card,
+.stat-card,
+.flash {
+  background: var(--panel);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+}
+
+.hero {
+  border-radius: 28px;
+  padding: 28px;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: flex-end;
+  margin-bottom: 20px;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--accent-dark);
+  font-size: 0.75rem;
+  margin: 0 0 8px;
+}
+
+.hero h1 {
+  margin: 0;
+  font-size: clamp(2rem, 5vw, 4rem);
+  line-height: 0.95;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.status-chip,
+.pill {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  background: var(--pill);
+  border: 1px solid rgba(217, 119, 6, 0.18);
+  color: var(--accent-dark);
+  padding: 6px 10px;
+  font-size: 0.82rem;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.stat-card {
+  border-radius: 18px;
+  padding: 16px 18px;
+}
+
+.stat-label {
+  display: block;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.stat-card strong {
+  font-size: 1.35rem;
+}
+
+.filters {
+  border-radius: 18px;
+  padding: 16px 18px;
+  margin-bottom: 18px;
+}
+
+.filters-form {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  align-items: end;
+}
+
+.filters-form label {
+  display: grid;
+  gap: 6px;
+  min-width: 180px;
+  color: var(--muted);
+}
+
+.filters-form select {
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: white;
+  padding: 10px 12px;
+  font: inherit;
+}
+
+.checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: auto;
+}
+
+.story-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.story-list.compact {
+  grid-template-columns: 1fr;
+}
+
+.story-card,
+.empty-state,
+.briefing-card,
+.flash {
+  border-radius: 22px;
+  padding: 20px;
+}
+
+.story-meta {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.story-card h2,
+.briefing-card h2 {
+  margin: 14px 0 10px;
+  font-size: 1.35rem;
+  line-height: 1.15;
+}
+
+.story-card p,
+.briefing-body p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.story-actions {
+  margin-top: 16px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.briefing-body {
+  display: grid;
+  gap: 12px;
+}
+
+.flash.error {
+  color: #991b1b;
+  background: rgba(254, 226, 226, 0.8);
+}
+
+@media (max-width: 900px) {
+  .stats-grid,
+  .story-list {
+    grid-template-columns: 1fr;
+  }
+
+  .hero,
+  .topbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
