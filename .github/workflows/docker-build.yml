@@ -1,0 +1,18 @@
+name: Docker Build
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    permissions:
+      contents: write
+      packages: write
+    secrets: inherit
+    with:
+      promote_argocd_source: true
+    uses: mvs5465-test/.github/.github/workflows/docker-build.yml@main
